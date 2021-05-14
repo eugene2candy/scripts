@@ -1,0 +1,9 @@
+ This line has leading spaces.
+This line has trailing spaces. 
+ This line has both. 
+    Leading tab.
+Trailing tab.   
+    Both.   
+    Mixed.
+Mixed.    
+ Mixed.     
