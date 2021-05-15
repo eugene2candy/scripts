@@ -24,11 +24,21 @@ ulimit -H -c 0 --
 UMASK=022
 umask $UMASK
 
+# cookbook filename: make_temp
+# Make sure $TMP is set to something
+[ -n "$TMP" ] || TMP='/tmp'
+# Make a "good enough" random temp directory
 until [ -n "$temp_dir" -a ! -d "$temp_dir" ]; do
-    temp_dir="/tmp/meaningful_prefix.${RANDOM}${RANDOM}${RANDOM}"
+    temp_dir="/$TMP/meaningful_prefix.${RANDOM}${RANDOM}${RANDOM}"
 done
 mkdir -p -m 0700 $temp_dir \
-  || (echo "FATAL: Failed to create temp dir '$temp_dir': $?"; exit 100)
+  || { echo "FATAL: Failed to create temp dir '$temp_dir': $?"; exit 100; }
+echo $temp_dir
+# Make a "good enough" random temp file in the temp dir
+temp_file="$temp_dir/meaningful_prefix.${RANDOM}${RANDOM}${RANDOM}"
+touch $temp_file && chmod 0600 $temp_file \
+  || { echo "FATAL: Failed to create temp file '$temp_file': $?"; exit 101; }
+echo $temp_file
 
 # 尽全力清楚临时文件
 # 一定要先设置好temp_dir，千万不要修改
@@ -49,4 +59,15 @@ trap "$cleanup" ABRT EXIT HUP INT QUIT
 echo $(getconf PATH)
 
 # chkpath.2 检查PATH路径中人皆可写的目录
+
+echo "~$TMPDIR~"
+
+# create ssh token pair
+# ssh-keygen -t rsa -b 4096 -C meaningful comment
+# 限制ssh命令：14.22
+
+# 断开非活跃用户
+# 在zshrc中设置TMOUT
+# declare -r TMOUT=3600
+# readonly TMOUT=3600
 
