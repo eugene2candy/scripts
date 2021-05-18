@@ -6,15 +6,9 @@ for i in *.odt; do echo "<$i>" "<$(echo "$i" | cut -d'=' -f1,3)>"; done
 
 # unzip '*.zip'
 
-# screen -a
+screen -a
 ls
-echo $SHLVL
 # screen -r
 # screen -d -r
 
-diff -u 17.sh patched.sh > patch
-
-sed -i '' -e '1i\
-static header line1
-' add_header
-
+ls -la

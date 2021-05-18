@@ -1,0 +1,20 @@
+--- 17.sh	2021-05-18 17:56:50.000000000 +0800
++++ patched.sh	2021-05-18 17:46:41.000000000 +0800
+@@ -6,14 +6,9 @@
+ 
+ # unzip '*.zip'
+ 
+-# screen -a
++screen -a
+ ls
+-echo $SHLVL
+ # screen -r
+ # screen -d -r
+ 
+-diff -u 17.sh patched.sh > patch
+-
+-sed -i '' -e '1i\
+-static header line1
+-' add_header
+\ No newline at end of file
++ls -la
